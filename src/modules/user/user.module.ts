@@ -15,9 +15,7 @@ import { UserTypeDetails } from './entities/usertype.entity';
   ],
   controllers: [UserController],
   providers: [
-    // userTypeProvider,
-    UserService,
-    UserTypeService,
-  ],
+    // userTypeProvider, 
+    UserService, UserTypeService],
 })
 export class UserModule {}

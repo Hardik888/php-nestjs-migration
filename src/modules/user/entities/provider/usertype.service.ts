@@ -1,8 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UserTypeDetails } from '../usertype.entity';
 import { UserType } from '../../types/usertype.type';
@@ -17,10 +13,10 @@ export class UserTypeService {
     private userTypeRepo: Repository<UserTypeDetails>,
   ) {}
 
-  insert(payload: UserType) {
+  async insert(payload: UserType) {
     try {
       //Using QueryBuilder for sql queries
-      return this.userTypeRepo
+      const queryBuiler = this.userTypeRepo
         .createQueryBuilder()
         .insert()
         .into(UserTypeDetails)
@@ -28,6 +24,8 @@ export class UserTypeService {
           userTypeID: payload.userTypeID,
           userTypeName: payload.userTypeName,
         });
+      const result = await queryBuiler.execute();
+      return result;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('DB Shit went south!!!');

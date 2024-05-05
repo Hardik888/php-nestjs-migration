@@ -10,8 +10,13 @@ export class UserController {
   @Post('create')
   async insertUserType(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = req.body;
-      if (!payload) {
+      const { userTypeName, userTypeID } = req.body;
+      const payload = {
+        userTypeName,
+        userTypeID,
+      };
+      console.log(payload);
+      if (!userTypeName || !userTypeID) {
         throw new HttpException(
           {
             message: 'Invalid Fields',
@@ -19,8 +24,8 @@ export class UserController {
           HttpStatus.BAD_REQUEST,
         );
       }
-      const reponse = await this.userService.insertToUserType(payload);
-      return res.json(reponse);
+      const response = await this.userService.insertToUserType(payload);
+      return res.send( response);
     } catch (error) {
       console.log(error);
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
