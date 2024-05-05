@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserTypeDetails {
-    @PrimaryGeneratedColumn()
-    UserType_ID: number;
-    @Column()
-    UserType_Name: string;
+  @PrimaryGeneratedColumn({ name: 'userTypeID' })
+  userTypeID: number;
+
+  @Column({ name: 'userTypeName' })
+  userTypeName: string;
 }

@@ -1,38 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { UserTypeDetails } from "./userType.entity";
-import { UserStatusDetails } from "./userstatus.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { UserTypeDetails } from './userType.entity';
+import { UserStatusDetails } from './userstatus.entity';
 
 @Entity()
 export class UserDetails {
-    @PrimaryGeneratedColumn()
-    userID: number;
+  @PrimaryGeneratedColumn()
+  userID: number;
 
-    @Column()
-    userName: string;
+  @Column()
+  userName: string;
 
-    @Column()
-    userSurname: string;
+  @Column()
+  userSurname: string;
 
-    @Column()
-    userMobileNo: string;
+  @Column()
+  userMobileNo: string;
 
-    @Column()
-    userEmail: string;
+  @Column()
+  userEmail: string;
 
-    @Column()
-    userAddress: string;
+  @Column()
+  userAddress: string;
 
-    @Column()
-    userDOB: Date;
+  @Column()
+  userDOB: Date;
 
-    @Column()
-    userGender: string;
+  @Column()
+  userGender: string;
 
-    @ManyToOne(() => UserTypeDetails)
-    userTypeID: UserTypeDetails;
+  @ManyToOne(() => UserTypeDetails)
+  userTypeID: UserTypeDetails;
 
-    @ManyToOne(() => UserStatusDetails)
-    userStatusID: UserStatusDetails;
+  @ManyToOne(() => UserStatusDetails)
+  userStatusID: UserStatusDetails;
 }
-
-
