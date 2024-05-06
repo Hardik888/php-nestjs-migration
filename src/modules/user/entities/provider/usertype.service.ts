@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 // Insert Into the UserType Table
 export class UserTypeService {
   constructor(
-    // @Inject('USERTYPE_REPOSITORY')
     @InjectRepository(UserTypeDetails)
     private userTypeRepo: Repository<UserTypeDetails>,
   ) {}
@@ -28,7 +27,7 @@ export class UserTypeService {
       return result;
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('DB Shit went south!!!');
+      throw new InternalServerErrorException('Cannot Insert');
     }
   }
 }

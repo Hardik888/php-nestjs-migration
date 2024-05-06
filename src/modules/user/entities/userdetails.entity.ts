@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { UserTypeDetails } from './userType.entity';
+import { UserTypeDetails } from '../entities/usertype.entity';
 import { UserStatusDetails } from './userstatus.entity';
 
 @Entity()
