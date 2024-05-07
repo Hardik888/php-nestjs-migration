@@ -3,7 +3,7 @@ import { UserTypeDetails } from '../entities/usertype.entity';
 import { UserStatusDetails } from './userstatus.entity';
 
 @Entity()
-export class UserDetails {
+export class UserDetail {
   @PrimaryGeneratedColumn()
   userID: number;
 
@@ -14,7 +14,7 @@ export class UserDetails {
   userSurname: string;
 
   @Column()
-  userMobileNo: string;
+  userMobileNo: number;
 
   @Column()
   userEmail: string;
@@ -29,8 +29,8 @@ export class UserDetails {
   userGender: string;
 
   @ManyToOne(() => UserTypeDetails)
-  userTypeID: UserTypeDetails;
+  userTypeID: number;
 
   @ManyToOne(() => UserStatusDetails)
-  userStatusID: UserStatusDetails;
+  userStatusID: number;
 }

@@ -4,6 +4,7 @@ import { UserType } from './types/usertype.type';
 import { response } from 'express';
 import { UserStatus } from './types/userstatus.type';
 import { UserStatusService } from './entities/provider/userstatus.service';
+import { Userdetails } from './types/userdetails.type';
 
 @Injectable()
 export class UserService {
@@ -30,11 +31,16 @@ export class UserService {
       if (!payload) {
         return null;
       }
+
       const response = await this.userStatusService.insert(payload);
+
       return response;
-      
     } catch (error) {
       return error;
     }
+  }
+
+  async insertIntoUserDetails(payload: Userdetails){
+    
   }
 }

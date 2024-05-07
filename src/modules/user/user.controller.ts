@@ -15,7 +15,7 @@ export class UserController {
         userTypeName,
         userTypeID,
       };
-      console.log(payload);
+      // console.log(payload);
       if (!userTypeName && !userTypeID) {
         throw new HttpException(
           {
