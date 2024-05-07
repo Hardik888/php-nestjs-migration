@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { UserTypeDetails } from '../entities/usertype.entity';
 import { UserStatusDetails } from './userstatus.entity';
 
@@ -14,7 +20,7 @@ export class UserDetail {
   userSurname: string;
 
   @Column()
-  userMobileNo: number;
+  userMobileNo: string;
 
   @Column()
   userEmail: string;
@@ -23,14 +29,16 @@ export class UserDetail {
   userAddress: string;
 
   @Column()
-  userDOB: Date;
+  userDOB: string;
 
   @Column()
   userGender: string;
 
   @ManyToOne(() => UserTypeDetails)
+  @JoinColumn({ name: 'userTypeID' })
   userTypeID: number;
 
   @ManyToOne(() => UserStatusDetails)
+  @JoinColumn({ name: 'userStatusID' })
   userStatusID: number;
 }

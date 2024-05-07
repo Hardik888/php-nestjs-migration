@@ -26,12 +26,19 @@ export class UserdetailService {
           userTypeID: userTypeID,
         },
       });
-
+      console.log(findTypeID);
       const findStatusID = this.userStatusRepository.find({
         where: {
           userStatusID: userStatusID,
         },
       });
+      console.log(findStatusID);
+      if (userTypeID === undefined || userStatusID === undefined) {
+        throw new HttpException(
+          'userTypeID and userStatusID are required',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       if (findStatusID && findTypeID) {
         const queryBuilder = this.userDetailRepository
           .createQueryBuilder()
@@ -49,9 +56,9 @@ export class UserdetailService {
             userTypeID: payload.userTypeID,
             userStatusID: payload.userStatusID,
           });
+
         return await queryBuilder.execute();
       }
-      return null;
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }

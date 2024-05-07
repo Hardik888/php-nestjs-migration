@@ -1,8 +1,9 @@
+
 export type User = {
   userID: number;
   userName: string;
   userSurname: string;
-  userMobileNo: number;
+  userMobileNo: string;
   userEmail: string;
   userAddress: string;
   userDOB: string;
