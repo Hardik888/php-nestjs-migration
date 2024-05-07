@@ -19,40 +19,41 @@ export class UserdetailService {
   ) {}
 
   async insert(payload: User) {
-    const { userTypeID, userStatusID } = payload;
-    const findTypeID = this.userTypeRepository.find({
-      where: {
-        userTypeID: userTypeID,
-      },
-    });
+    try {
+      const { userTypeID, userStatusID } = payload;
+      const findTypeID = this.userTypeRepository.find({
+        where: {
+          userTypeID: userTypeID,
+        },
+      });
 
-    const findStatusID = this.userStatusRepository.find({
-      where: {
-        userStatusID: userStatusID,
-      },
-    });
-    if (findStatusID && findTypeID) {
-      const queryBuilder = this.userDetailRepository
-        .createQueryBuilder()
-        .insert()
-        .into(UserDetail)
-        .values({
-          userID: payload.userID,
-          userName: payload.userName,
-          userSurname: payload.userSurname,
-          userMobileNo: payload.userMobileNo,
-          userEmail: payload.userEmail,
-          userAddress: payload.userAddress,
-          userDOB: payload.userDOB,
-          userGender: payload.userGender,
-          userTypeID: payload.userTypeID,
-          userStatusID: payload.userStatusID,
-        });
-      return await queryBuilder.execute();
+      const findStatusID = this.userStatusRepository.find({
+        where: {
+          userStatusID: userStatusID,
+        },
+      });
+      if (findStatusID && findTypeID) {
+        const queryBuilder = this.userDetailRepository
+          .createQueryBuilder()
+          .insert()
+          .into(UserDetail)
+          .values({
+            userID: payload.userID,
+            userName: payload.userName,
+            userSurname: payload.userSurname,
+            userMobileNo: payload.userMobileNo,
+            userEmail: payload.userEmail,
+            userAddress: payload.userAddress,
+            userDOB: payload.userDOB,
+            userGender: payload.userGender,
+            userTypeID: payload.userTypeID,
+            userStatusID: payload.userStatusID,
+          });
+        return await queryBuilder.execute();
+      }
+      return null;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
-    return null;
-  }
-  catch(error: Error) {
-    throw new HttpException(error, HttpStatus.BAD_REQUEST);
   }
 }

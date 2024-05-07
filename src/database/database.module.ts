@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserDetail } from 'src/modules/user/entities/userdetails.entity';
 import { UserStatusDetails } from 'src/modules/user/entities/userstatus.entity';
 import { UserTypeDetails } from 'src/modules/user/entities/usertype.entity';
 
@@ -12,7 +13,7 @@ import { UserTypeDetails } from 'src/modules/user/entities/usertype.entity';
       username: 'migration',
       password: 'password',
       database: 'MIGRATION',
-      entities: [UserTypeDetails, UserStatusDetails],
+      entities: [UserTypeDetails, UserStatusDetails, UserDetail],
       synchronize: true,
     }),
   ],

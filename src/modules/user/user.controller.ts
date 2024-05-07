@@ -1,7 +1,19 @@
-import { Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
+import {
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { Request, Response } from 'express';
 import { Req, Res } from '@nestjs/common';
+import { User } from './types/userdetails.type';
+import { RandomUserIDInterceptor } from './interceptors/randomgenratedid.interceptor';
+
+// interface ExtendedRequest extends Request {
+//   User: User;
+// }
 
 @Controller('user')
 export class UserController {
@@ -46,6 +58,26 @@ export class UserController {
       }
       const response = await this.userService.insertToUserStatus(payload);
 
+      return res.send(response);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_GATEWAY);
+    }
+  }
+
+  @Post('Userdetails')
+  @UseInterceptors(new RandomUserIDInterceptor())
+  async insertUserDetails(@Req() req: Request, @Res() res: Response) {
+    try {
+      const payload = req.body;
+      if (!payload) {
+        throw new HttpException(
+          {
+            message: 'Invalid Fields',
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      const response = await this.userService.inserttoUserDetails(payload);
       return res.send(response);
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);

@@ -7,17 +7,21 @@ import {
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class RandomUserIDIntercetor implements NestInterceptor {
+export class RandomUserIDInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     const req = context.switchToHttp().getRequest();
+    const { body } = req;
 
-    if (req.body && req.body.userID) {
-      const randomID = Math.floor(Math.random() * 2312);
-      req.body.userID = randomID;
+    if (body && body.userID !== undefined) {
+      if (typeof body.userID !== 'number') {
+        throw new Error('User ID must be a number');
+      }
+      body.randomUserID = Math.floor(Math.random() * 2312);
     }
+
     return next.handle();
   }
 }
