@@ -63,9 +63,8 @@ export class UserController {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
   }
-
-  @Post('Userdetails')
   @UseInterceptors(new RandomUserIDInterceptor())
+  @Post('Userdetails')
   async insertUserDetails(@Req() req: Request, @Res() res: Response) {
     try {
       const payload = req.body;

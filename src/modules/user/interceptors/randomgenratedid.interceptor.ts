@@ -19,7 +19,7 @@ export class RandomUserIDInterceptor implements NestInterceptor {
       if (typeof body.userID !== 'number') {
         throw new Error('User ID must be a number');
       }
-      body.randomUserID = Math.floor(Math.random() * 2312);
+      body.userID = Math.floor(Math.random() * 2312121232);
     }
 
     return next.handle();
