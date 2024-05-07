@@ -4,6 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -14,12 +15,13 @@ export class RandomUserIDInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     const req = context.switchToHttp().getRequest();
     const { body } = req;
-
+    let uuid = uuidv4();
+    console.log(uuid);
     if (body && body.userID !== undefined) {
-      if (typeof body.userID !== 'number') {
+      if (typeof body.userID !== 'string') {
         throw new Error('User ID must be a number');
       }
-      body.userID = Math.floor(Math.random() * 2312121232);
+      body.userID = uuid as number;
     }
 
     return next.handle();

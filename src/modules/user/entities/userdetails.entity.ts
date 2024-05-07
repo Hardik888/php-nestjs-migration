@@ -10,9 +10,8 @@ import { UserStatusDetails } from './userstatus.entity';
 
 @Entity()
 export class UserDetail {
-  @PrimaryGeneratedColumn()
-  userID: number;
-
+  @PrimaryGeneratedColumn('uuid')
+  userID: string;
   @Column()
   userName: string;
 
