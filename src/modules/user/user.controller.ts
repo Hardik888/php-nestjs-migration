@@ -1,15 +1,8 @@
-import {
-  Controller,
-  HttpException,
-  HttpStatus,
-  Post,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Request, Response } from 'express';
 import { Req, Res } from '@nestjs/common';
-import { User } from './types/userdetails.type';
-import { RandomUserIDInterceptor } from './interceptors/randomgenratedid.interceptor';
+import { send } from 'process';
 
 // interface ExtendedRequest extends Request {
 //   User: User;
@@ -37,6 +30,14 @@ export class UserController {
         );
       }
       const response = await this.userService.insertToUserType(payload);
+      if (!response) {
+        throw new HttpException(
+          {
+            message: 'Usertype failed', // More specific message
+          },
+          HttpStatus.CONFLICT, // Use appropriate status code
+        );
+      }
       return res.send(response);
     } catch (error) {
       console.log(error);
@@ -57,13 +58,48 @@ export class UserController {
         );
       }
       const response = await this.userService.insertToUserStatus(payload);
-
+      if (!response) {
+        throw new HttpException(
+          {
+            message: 'UserStatus failed', // More specific message
+          },
+          HttpStatus.CONFLICT, // Use appropriate status code
+        );
+      }
       return res.send(response);
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
   }
-  @UseInterceptors(new RandomUserIDInterceptor())
+  @Post('DeleteUser')
+  async deleteUser(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { userID } = req.body;
+      if (!userID) {
+        throw new HttpException(
+          {
+            message: 'Invalid Fields',
+          },
+          HttpStatus.BAD_REQUEST, // Use appropriate status code
+        );
+      }
+      const response = await this.userService.deleteUser(userID);
+
+      if (!response) {
+        throw new HttpException(
+          {
+            message: 'User deletion failed', // More specific message
+          },
+          HttpStatus.CONFLICT, // Use appropriate status code
+        );
+      }
+      return res.send(response);
+    } catch (error) {
+      // Consider logging the error here
+      throw error; // Re-throw the original error
+    }
+  }
+
   @Post('Userdetails')
   async insertUserDetails(@Req() req: Request, @Res() res: Response) {
     try {
@@ -77,6 +113,14 @@ export class UserController {
         );
       }
       const response = await this.userService.inserttoUserDetails(payload);
+      if (!response) {
+        throw new HttpException(
+          {
+            message: 'User Insertion failed', // More specific message
+          },
+          HttpStatus.CONFLICT, // Use appropriate status code
+        );
+      }
       return res.send(response);
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);

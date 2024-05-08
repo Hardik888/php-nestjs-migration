@@ -21,13 +21,13 @@ export class UserdetailService {
   async insert(payload: User) {
     try {
       const { userTypeID, userStatusID } = payload;
-      const findTypeID = this.userTypeRepository.find({
+      const findTypeID = await this.userTypeRepository.find({
         where: {
           userTypeID: userTypeID,
         },
       });
       console.log(findTypeID);
-      const findStatusID = this.userStatusRepository.find({
+      const findStatusID = await this.userStatusRepository.find({
         where: {
           userStatusID: userStatusID,
         },
@@ -45,7 +45,6 @@ export class UserdetailService {
           .insert()
           .into(UserDetail)
           .values({
-            userID: payload.userID,
             userName: payload.userName,
             userSurname: payload.userSurname,
             userMobileNo: payload.userMobileNo,
@@ -59,6 +58,28 @@ export class UserdetailService {
 
         return await queryBuilder.execute();
       }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async deleteUser(userID: any): Promise<boolean | any> {
+    try {
+      if (!userID) {
+        return false;
+      }
+
+      const queryBuilder = this.userDetailRepository
+        .createQueryBuilder()
+        .delete()
+        .from(UserDetail, 'user_detail')
+        .where('user_detail.userID = :userID', { userID: userID });
+
+      const result = await queryBuilder.execute();
+      if (result.affected == 0) {
+        return false;
+      }
+      return result;
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }

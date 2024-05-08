@@ -56,4 +56,20 @@ export class UserService {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
   }
+
+  async deleteUser(userID: string) {
+    try {
+      if (!userID) {
+        return null;
+      }
+      const response = await this.userDetailService.deleteUser(userID);
+      if (!response) {
+        return false;
+      }
+
+      return response;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_GATEWAY);
+    }
+  }
 }

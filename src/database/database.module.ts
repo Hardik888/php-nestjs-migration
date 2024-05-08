@@ -12,7 +12,7 @@ import { UserTypeDetails } from 'src/modules/user/entities/usertype.entity';
       port: 3306, // Default port for MariaDB
       username: 'migration',
       password: 'password',
-      database: 'test',
+      database: 'MIGRATION',
       entities: [UserTypeDetails, UserStatusDetails, UserDetail],
       synchronize: true,
     }),

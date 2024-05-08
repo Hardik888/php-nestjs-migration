@@ -8,7 +8,7 @@ import { UserStatusDetails } from './entities/userstatus.entity';
 import { UserStatusService } from './entities/provider/userstatus.service';
 import { UserdetailService } from './entities/provider/userdetails.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { RandomUserIDInterceptor } from './interceptors/randomgenratedid.interceptor';
+
 import { UserDetail } from './entities/userdetails.entity';
 
 @Module({
@@ -23,10 +23,6 @@ import { UserDetail } from './entities/userdetails.entity';
     UserTypeService,
     UserStatusService,
     UserdetailService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RandomUserIDInterceptor,
-    },
   ],
 })
 export class UserModule {}

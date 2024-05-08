@@ -11,7 +11,7 @@ import { UserStatusDetails } from './userstatus.entity';
 @Entity()
 export class UserDetail {
   @PrimaryGeneratedColumn('uuid')
-  userID: string;
+  userID: number;
   @Column()
   userName: string;
 
