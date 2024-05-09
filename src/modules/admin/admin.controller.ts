@@ -54,7 +54,9 @@ export class AdminController {
     try {
       const { userStatusName, userStatusID } = req.body;
       const payload = { userStatusName, userStatusID };
-      this.errorbody();
+      if (!userStatusName && !userStatusID) {
+        this.errorbody();
+      }
       const response = await this.userService.insertToUserStatus(payload);
       if (!response) {
         throw new HttpException(
@@ -96,7 +98,7 @@ export class AdminController {
   async insertUserDetails(@Req() req: Request, @Res() res: Response) {
     try {
       const payload = req.body;
-      const { userMobileNo } = payload;
+      const { userMobileNo, userStatusID } = payload;
       if (!payload) {
         this.errorbody();
       }
@@ -112,11 +114,14 @@ export class AdminController {
       const id = response.identifiers[0].userID;
       this.loginService.iD(id);
       this.loginService.mobileNo(userMobileNo);
-      const loginTransaction = await this.loginService.insert();
-      return res.send({
-        message: response,
-        loginTransaction,
-      });
+      if (userStatusID == 1) {
+        const loginTransaction = await this.loginService.insert();
+        return res.send({
+          message: response,
+          loginTransaction,
+        });
+      }
+      return res.send(response);
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
