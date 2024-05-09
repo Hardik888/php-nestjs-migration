@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserDetail } from 'src/modules/user/entities/userdetails.entity';
-import { UserStatusDetails } from 'src/modules/user/entities/userstatus.entity';
-import { UserTypeDetails } from 'src/modules/user/entities/usertype.entity';
+import { UserDetail } from 'src/modules/admin/entities/userdetails.entity';
+import { UserStatusDetails } from 'src/modules/admin/entities/userstatus.entity';
+import { UserTypeDetails } from 'src/modules/admin/entities/usertype.entity';
+import { LoginDetail } from 'src/modules/auth/entities/auth.entity';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { UserTypeDetails } from 'src/modules/user/entities/usertype.entity';
       username: 'migration',
       password: 'password',
       database: 'MIGRATION',
-      entities: [UserTypeDetails, UserStatusDetails, UserDetail],
+      entities: [UserTypeDetails, UserStatusDetails, UserDetail, LoginDetail],
       synchronize: true,
     }),
   ],

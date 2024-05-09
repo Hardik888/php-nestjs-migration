@@ -1,7 +1,10 @@
-import { Module } from "@nestjs/common";
-
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoginDetailsService } from './entities/provider/logindetail.service';
+import { LoginDetail } from './entities/auth.entity';
 @Module({
-    imports: []
+  imports: [TypeOrmModule.forFeature([LoginDetail])],
+  providers: [LoginDetailsService],
+  exports: [LoginDetailsService],
 })
-
-export class AuthModule { }
+export class AuthModule {}

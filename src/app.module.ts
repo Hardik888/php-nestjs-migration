@@ -1,23 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './modules/user/user.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserTypeDetails } from './modules/user/entities/usertype.entity';
+import { AdminModule } from './modules/admin/admin.module';
+
 import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [
-    // TypeOrmModule.forRoot({
-    //   type: 'mariadb',
-    //   host: '127.0.0.1',
-    //   port: 3306, // Default port for MariaDB
-    //   username: 'migration',
-    //   password: 'password',
-    //   database: 'MIGRATION',
-    //   entities: [UserTypeDetails],
-    //   synchronize: true,
-    // }),
-    DatabaseModule,
-    UserModule,
-  ],
+  imports: [DatabaseModule, AdminModule, AuthModule],
 })
 export class AppModule {}

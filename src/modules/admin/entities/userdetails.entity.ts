@@ -5,23 +5,23 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { UserTypeDetails } from '../entities/usertype.entity';
+import { UserTypeDetails } from './usertype.entity';
 import { UserStatusDetails } from './userstatus.entity';
 
 @Entity()
 export class UserDetail {
   @PrimaryGeneratedColumn('uuid')
   userID: number;
-  @Column()
+  @Column({ nullable: false, unique: false })
   userName: string;
 
   @Column()
   userSurname: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   userMobileNo: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   userEmail: string;
 
   @Column()

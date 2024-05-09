@@ -33,7 +33,7 @@ export class UserdetailService {
         },
       });
       console.log(findStatusID);
-      if (userTypeID === undefined || userStatusID === undefined) {
+      if (findTypeID === undefined || userStatusID === undefined) {
         throw new HttpException(
           'userTypeID and userStatusID are required',
           HttpStatus.BAD_REQUEST,

@@ -9,13 +9,13 @@ import { Repository } from 'typeorm';
 export class UserStatusService {
   constructor(
     @InjectRepository(UserStatusDetails)
-    private userStatusRepo: Repository<UserStatusDetails>,
+    private userStatusRepository: Repository<UserStatusDetails>,
   ) {}
 
   async insert(payload: UserStatus) {
     try {
       //Using QueryBuilder for sql queries
-      const queryBuiler = this.userStatusRepo
+      const queryBuiler = this.userStatusRepository
         .createQueryBuilder()
         .insert()
         .into(UserStatusDetails)
