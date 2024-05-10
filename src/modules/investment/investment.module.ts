@@ -3,6 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { InvestmentController } from './investment.controller';
 import { InvestmentService } from './investment.service';
 import {
+  BankDetailService,
+  InvestmentDetailService,
+  InvestmentDurationService,
+  CurrentInvestmentService,
+} from './entities/provider/index';
+import {
   InvestmentDetail,
   CurrentInvestment,
   BankDetail,
@@ -18,6 +24,12 @@ import {
     ]),
   ],
   controllers: [InvestmentController],
-  providers: [InvestmentService],
+  providers: [
+    InvestmentService,
+    BankDetailService,
+    InvestmentDetailService,
+    InvestmentDurationService,
+    CurrentInvestmentService,
+  ],
 })
 export class InvestmentModule {}

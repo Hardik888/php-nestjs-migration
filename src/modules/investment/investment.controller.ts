@@ -1,8 +1,4 @@
-import { Controller } from "@nestjs/common";
-
+import { Controller } from '@nestjs/common';
+import { InvestmentService } from './investment.service';
 @Controller()
-
-export class InvestmentController{
-    
-    
-}
+export class InvestmentController {}
