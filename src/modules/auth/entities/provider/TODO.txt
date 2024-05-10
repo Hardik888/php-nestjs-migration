@@ -1,0 +1,89 @@
+
+/*TAKE THE USERID FROM THE RESPONSE CONTEXT COMING FROM THE 
+  USERDETAILS. AND THEN ATTACH THAT USERID INTO THE LOGINDETAIL
+  SERVICE PAYLOAD, FOR INSERTION INTO THE LOGINDETAILS TABLE, MAKE 
+  SURE YOU TAKE 200  RESPONSE  FROM THE USERDETAILS SERVICE.
+
+  HOW CAN I PERFORM THESE OPERATIONS IN NESTJS  
+ 
+*/
+// // import { Observable, map } from 'rxjs';
+// // // import { LoginDetailsService } from 'src/modules/auth/entities/provider/logindetail.service';
+
+// // @Injectable()
+// // export class UserIDInteceptor implements NestInterceptor {
+// //   // constructor(private loginService: LoginDetailsService) {}
+
+// //   private extractUserID(response: any): any {
+// //     console.log('Response', response);
+// //     if (response && response.identifiers && response.identifiers.length > 0) {
+// //       const userIdentifiers = response.identifiers[0];
+// //       if (userIdentifiers && userIdentifiers.userID) {
+// //         return userIdentifiers.userID;
+// //       }
+// //     }
+// //     return null;
+// //   }
+
+// //   intercept(
+// //     context: ExecutionContext,
+// //     next: CallHandler<any>,
+// //   ): Observable<any> | Promise<Observable<any>> {
+// //     // return next.handle().pipe(
+// //     //   map((response) => {
+// //     //     const userID = response.userID;
+// //     //     if (context.getType() === 'http') {
+// //     //       const request = context.switchToHttp().getResponse();
+// //     //       if (request) {
+// //     //         const modifiedRequest = {
+// //     //           ...request.body,
+// //     //           userID: userID,
+// //     //         };
+// //     //         request.body = modifiedRequest;
+// //     //       }
+// //     //     }
+// //     //     console.log(response);
+// //     //     return response;
+// //     //   }),
+// //     // );
+
+// //     return next.handle().pipe(
+// //       map((response) => {
+// //         const userID = this.extractUserID(response);
+// //         console.log('Extracted userID', userID);
+// //         return response;
+// //       }),
+// //     );
+// //   }
+// // }
+
+// @Injectable()
+// export class UserIDInteceptor implements NestInterceptor {
+//   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+//     let responseBody: any;
+
+//     return next.handle().pipe(
+//       tap((response) => {
+//         // Store the response body for later use
+//         responseBody = response;
+//       }),
+//       map((response) => {
+//         const userID = this.extractUserId(responseBody);
+//         console.log('Extracted userID:', userID);
+//         return response;
+//       }),
+//     );
+//   }
+
+//   private extractUserId(responseBody: any): string | null {
+//     console.log(responseBody);
+//     if (
+//       responseBody &&
+//       responseBody.identifiers &&
+//       responseBody.identifiers.length > 0
+//     ) {
+//       return responseBody.identifiers[0].userID;
+//     }
+//     return null;
+//   }
+// }
