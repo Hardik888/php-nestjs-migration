@@ -31,6 +31,7 @@ export class LoginDetailsService {
           userID: this.userID,
         });
       return await queryBuilder.execute();
+      
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }

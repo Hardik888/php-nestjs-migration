@@ -20,19 +20,19 @@ export class UserdetailService {
 
   async insert(payload: User) {
     try {
-      const { userTypeID, userStatusID } = payload;
+      const { userTypeID, userStatusID, userMobileNo } = payload;
       const findTypeID = await this.userTypeRepository.find({
         where: {
           userTypeID: userTypeID,
         },
       });
-      console.log(findTypeID);
+
       const findStatusID = await this.userStatusRepository.find({
         where: {
           userStatusID: userStatusID,
         },
       });
-      console.log(findStatusID);
+
       if (findTypeID === undefined || userStatusID === undefined) {
         throw new HttpException(
           'userTypeID and userStatusID are required',
@@ -56,13 +56,19 @@ export class UserdetailService {
             userStatusID: payload.userStatusID,
           });
 
-        return await queryBuilder.execute();
+        const result = await queryBuilder.execute();
+        const userID = result.identifiers[0].userID;
+        const userIDCheck = findStatusID[0].userStatusID;
+        const customresponse = { userID, userMobileNo, userIDCheck };
+        if (userIDCheck == 1) {
+          return customresponse;
+        }
+        return userID;
       }
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
   }
-
   async deleteUser(userID: any): Promise<boolean | any> {
     try {
       if (!userID) {

@@ -1,19 +1,19 @@
-import { Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
+import {
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { Request, Response } from 'express';
 import { Req, Res } from '@nestjs/common';
-import { LoginDetailsService } from '../auth/entities/provider/logindetail.service';
-
-// interface ExtendedRequest extends Request {
-//   User: User;
-// }
+import { UserIDInterceptor } from 'src/interceptor/auth.interceptor';
+import { UserIDDto } from 'src/interceptor/userid.dto';
 
 @Controller('user')
 export class AdminController {
-  constructor(
-    private userService: AdminService,
-    private loginService: LoginDetailsService,
-  ) {}
+  constructor(private userService: AdminService) {}
   private errorbody() {
     throw new HttpException(
       {
@@ -49,6 +49,7 @@ export class AdminController {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
   }
+
   @Post('userstatus')
   async insertUserStatus(@Req() req: Request, @Res() res: Response) {
     try {
@@ -93,7 +94,7 @@ export class AdminController {
       throw error;
     }
   }
-
+  //  @UseInterceptors(new UserIDInterceptor<UserIDDto>(UserIDDto))
   @Post('Userdetails')
   async insertUserDetails(@Req() req: Request, @Res() res: Response) {
     try {
@@ -111,16 +112,7 @@ export class AdminController {
           HttpStatus.CONFLICT, // Use appropriate status code
         );
       }
-      const id = response.identifiers[0].userID;
-      this.loginService.iD(id);
-      this.loginService.mobileNo(userMobileNo);
-      if (userStatusID == 1) {
-        const loginTransaction = await this.loginService.insert();
-        return res.send({
-          message: response,
-          loginTransaction,
-        });
-      }
+
       return res.send(response);
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
