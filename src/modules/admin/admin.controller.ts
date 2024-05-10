@@ -99,7 +99,6 @@ export class AdminController {
   async insertUserDetails(@Req() req: Request, @Res() res: Response) {
     try {
       const payload = req.body;
-      const { userMobileNo, userStatusID } = payload;
       if (!payload) {
         this.errorbody();
       }

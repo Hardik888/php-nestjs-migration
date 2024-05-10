@@ -20,6 +20,7 @@ export class UserIDInterceptor<T extends UserIDDto> implements NestInterceptor {
 
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
+    // Take the userMobileNo and userStatus from the request Context
     const { userMobileNo, userStatusID } = context
       .switchToHttp()
       .getRequest().body;
@@ -29,6 +30,7 @@ export class UserIDInterceptor<T extends UserIDDto> implements NestInterceptor {
         const response = plainToClass(this.dto, data, {
           excludeExtraneousValues: true,
         });
+        // take the userId from the response Context
         const id = response?.userID;
 
         if (userStatusID == 1) {
