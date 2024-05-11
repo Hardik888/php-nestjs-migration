@@ -38,9 +38,9 @@ export class AdminController {
       if (!response) {
         throw new HttpException(
           {
-            message: 'Usertype failed', // More specific message
+            message: 'Usertype failed',
           },
-          HttpStatus.CONFLICT, // Use appropriate status code
+          HttpStatus.CONFLICT,
         );
       }
       return res.send(response);
@@ -62,9 +62,9 @@ export class AdminController {
       if (!response) {
         throw new HttpException(
           {
-            message: 'UserStatus failed', // More specific message
+            message: 'UserStatus failed',
           },
-          HttpStatus.CONFLICT, // Use appropriate status code
+          HttpStatus.CONFLICT,
         );
       }
       return res.send(response);
@@ -84,9 +84,9 @@ export class AdminController {
       if (!response) {
         throw new HttpException(
           {
-            message: 'User deletion failed', // More specific message
+            message: 'User deletion failed',
           },
-          HttpStatus.CONFLICT, // Use appropriate status code
+          HttpStatus.CONFLICT,
         );
       }
       return res.send(response);
@@ -94,7 +94,7 @@ export class AdminController {
       throw error;
     }
   }
-  //  @UseInterceptors(new UserIDInterceptor<UserIDDto>(UserIDDto))
+  @UseInterceptors(new UserIDInterceptor<UserIDDto>(UserIDDto))
   @Post('Userdetails')
   async insertUserDetails(@Req() req: Request, @Res() res: Response) {
     try {
@@ -107,9 +107,9 @@ export class AdminController {
       if (!response) {
         throw new HttpException(
           {
-            message: 'User Insertion failed', // More specific message
+            message: 'User Insertion failed',
           },
-          HttpStatus.CONFLICT, // Use appropriate status code
+          HttpStatus.CONFLICT,
         );
       }
 

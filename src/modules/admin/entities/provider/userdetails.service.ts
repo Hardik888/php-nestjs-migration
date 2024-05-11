@@ -58,11 +58,6 @@ export class UserdetailService {
 
         const result = await queryBuilder.execute();
         const userID = result.identifiers[0].userID;
-        const userIDCheck = findStatusID[0].userStatusID;
-        const customresponse = { userID, userMobileNo, userIDCheck };
-        if (userIDCheck == 1) {
-          return customresponse;
-        }
         return userID;
       }
     } catch (error) {
