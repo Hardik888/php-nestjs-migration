@@ -8,9 +8,10 @@ import {
 import { AdminService } from './admin.service';
 import { Request, Response } from 'express';
 import { Req, Res } from '@nestjs/common';
-import { UserIDInterceptor } from 'src/interceptor/auth.interceptor';
-import { UserIDDto } from 'src/interceptor/userid.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
+@UseInterceptors(CacheInterceptor)
+// @UseInterceptors(new UserIDInterceptor<UserIDDto>(UserIDDto))
 @Controller('user')
 export class AdminController {
   constructor(private userService: AdminService) {}
@@ -94,12 +95,10 @@ export class AdminController {
       throw error;
     }
   }
-  @UseInterceptors(new UserIDInterceptor<UserIDDto>(UserIDDto))
   @Post('Userdetails')
-  async insertUserDetails(@Req() req: Request, @Res() res: Response) {
+  async insertUserDetails(@Req() req: Request) {
     try {
       const payload = req.body;
-      const { userMobileNo, userStatusID } = payload;
       if (!payload) {
         this.errorbody();
       }
@@ -113,7 +112,7 @@ export class AdminController {
         );
       }
 
-      return res.send(response);
+      return response;
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }

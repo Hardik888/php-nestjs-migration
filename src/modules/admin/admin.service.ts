@@ -5,6 +5,9 @@ import { UserStatus } from './types/userstatus.type';
 import { UserStatusService } from './entities/provider/userstatus.service';
 import { User } from './types/userdetails.type';
 import { UserdetailService } from './entities/provider/userdetails.service';
+import { Inject } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class AdminService {
@@ -12,6 +15,7 @@ export class AdminService {
     private userTypeService: UserTypeService,
     private userStatusService: UserStatusService,
     private userDetailService: UserdetailService,
+    @Inject(CACHE_MANAGER) private cacheService: Cache,
   ) {}
 
   async insertToUserType(payload: UserType) {
@@ -48,6 +52,13 @@ export class AdminService {
       }
 
       const response = await this.userDetailService.insert(payload);
+
+      const a = await this.cacheService.set('userID', response.userID);
+      const b = await this.cacheService.set(
+        'userMobileNO',
+        response.userMobileNo,
+      );
+      
       if (!response) {
         return null;
       }

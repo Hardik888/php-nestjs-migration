@@ -58,7 +58,10 @@ export class UserdetailService {
 
         const result = await queryBuilder.execute();
         const userID = result.identifiers[0].userID;
-        return userID;
+        return {
+          userID: userID,
+          userMobileNo: userMobileNo,
+        };
       }
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);

@@ -22,27 +22,19 @@ export class UserIDInterceptor<T extends UserIDDto> implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     // Take the userMobileNo and userStatus from the request Context
     const request = context.switchToHttp().getRequest();
-    if (request.url === '/user/Userdetails' && request.method === 'POST') {
-      const { userStatusID, userMobileNo } = request.body;
 
-      return next.handle().pipe(
-        map((data: T) => {
-          const response = plainToClass(this.dto, data, {
-            excludeExtraneousValues: true,
-          });
-          // take the userId from the response Context
-          const id = response?.userID;
+    const { userStatusID, userMobileNo } = request.body;
 
-          if (userStatusID == 1) {
-            this.loginDetailsService.iD(id);
-            this.loginDetailsService.mobileNo(userMobileNo);
-            this.loginDetailsService.insert();
-          }
-          return response;
-        }),
-      );
-    } else {
-      return next.handle();
-    }
+    return next.handle().pipe(
+      map((data: T) => {
+        const response = plainToClass(this.dto, data, {
+          excludeExtraneousValues: true,
+        });
+        // take the userId from the response Context
+        const userID = response?.userID;
+        const payload = { userID, userMobileNo };
+        return payload;
+      }),
+    );
   }
 }
