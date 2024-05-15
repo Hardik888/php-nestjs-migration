@@ -10,6 +10,7 @@ import {
 } from './entities/provider/index';
 import {
   InvestmentDetail,
+  StockData,
   CurrentInvestment,
   BankDetail,
   InvestmentDuration,
@@ -21,6 +22,7 @@ import {
       CurrentInvestment,
       BankDetail,
       InvestmentDetail,
+      StockData,
     ]),
   ],
   controllers: [InvestmentController],

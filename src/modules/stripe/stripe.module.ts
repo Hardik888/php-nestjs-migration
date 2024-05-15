@@ -3,7 +3,7 @@ import { StripeController } from './stripe.controller';
 import { StripeService } from './stripe.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PaymentSchema } from './entities/payment.entity';
+import { PaymentSchema } from './entities/payment.schema';
 @Module({})
 export class StripeModule {
   static forRootAsync(): DynamicModule {

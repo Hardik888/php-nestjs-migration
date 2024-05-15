@@ -8,6 +8,7 @@ import {
   InvestmentDetail,
   CurrentInvestment,
   BankDetail,
+  StockData,
   InvestmentDuration,
 } from '../modules/investment/entities/index';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -37,6 +38,7 @@ import { MongooseModule } from '@nestjs/mongoose';
             InvestmentDetail,
             CurrentInvestment,
             BankDetail,
+            StockData,
             InvestmentDuration,
           ],
           synchronize: true,
