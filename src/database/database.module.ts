@@ -43,7 +43,13 @@ import { MongooseModule } from '@nestjs/mongoose';
         };
       },
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017/Migration'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('mongodb_string'),
+      }),
+    }),
   ],
 
   exports: [TypeOrmModule],
