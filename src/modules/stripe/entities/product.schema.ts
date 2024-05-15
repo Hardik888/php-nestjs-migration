@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
+import { Product } from './product.entity';
 
-const ProductSchema = new mongoose.Schema({
+export const ProductSchema = new mongoose.Schema<Product>({
   testStock: {
-  
+    amount: Number,
   },
   testStock2: {
-  
+    amount: Number,
   },
   testStock3: {
-   
+    amount: Number,
   },
 });

@@ -36,7 +36,7 @@ export class InvestmentDetailService {
           investmentTotal: investmentTotal,
         });
       const result = await queryBuilder.execute();
-        return result;
+      return result;
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }

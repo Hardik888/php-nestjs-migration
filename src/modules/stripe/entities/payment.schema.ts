@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import { Payment } from './payment.entity';
 
-export const PaymentSchema = new mongoose.Schema({
+export const PaymentSchema = new mongoose.Schema<Payment>({
   userID: {
     type: Number,
     required: true,

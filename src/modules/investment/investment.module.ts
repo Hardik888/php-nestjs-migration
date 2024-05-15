@@ -15,6 +15,7 @@ import {
   BankDetail,
   InvestmentDuration,
 } from './entities/index';
+import { StripeModule } from '../stripe/stripe.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -24,6 +25,7 @@ import {
       InvestmentDetail,
       StockData,
     ]),
+    StripeModule,
   ],
   controllers: [InvestmentController],
   providers: [

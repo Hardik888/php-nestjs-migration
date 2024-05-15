@@ -28,6 +28,7 @@ export class StripeModule {
           inject: [ConfigService],
         },
       ],
+      exports: [MongooseModule],
     };
   }
 }

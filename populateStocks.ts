@@ -1,7 +1,6 @@
 const mysql = require('mysql2'); // Use mysql2 instead of mysql
 const dotenv = require('dotenv');
 dotenv.config();
-
 // Create a MySQL connection pool
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -11,7 +10,6 @@ const pool = mysql.createPool({
   password: process.env.mysql_password,
   database: process.env.mysql_database,
 });
-
 // Initialize DataSource
 pool.getConnection((err, connection) => {
   if (err) {
