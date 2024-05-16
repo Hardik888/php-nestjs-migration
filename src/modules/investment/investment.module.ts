@@ -7,6 +7,7 @@ import {
   InvestmentDetailService,
   InvestmentDurationService,
   CurrentInvestmentService,
+  StockSync,
 } from './entities/provider/index';
 import {
   InvestmentDetail,
@@ -16,8 +17,11 @@ import {
   InvestmentDuration,
 } from './entities/index';
 import { StripeModule } from '../stripe/stripe.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ProductSchema } from '../stripe/entities/product.schema';
 @Module({
   imports: [
+    StripeModule,
     TypeOrmModule.forFeature([
       InvestmentDuration,
       CurrentInvestment,
@@ -25,12 +29,13 @@ import { StripeModule } from '../stripe/stripe.module';
       InvestmentDetail,
       StockData,
     ]),
-    StripeModule,
+    MongooseModule.forFeature([{ name: 'PRODUCT', schema: ProductSchema }]),
   ],
   controllers: [InvestmentController],
   providers: [
     InvestmentService,
     BankDetailService,
+    StockSync,
     InvestmentDetailService,
     InvestmentDurationService,
     CurrentInvestmentService,

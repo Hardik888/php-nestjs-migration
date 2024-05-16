@@ -13,12 +13,11 @@ import { join } from 'path';
     DatabaseModule,
     AdminModule,
     AuthModule,
-    InvestmentModule
-    ,
+    InvestmentModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname,'..','client')
+      rootPath: join(__dirname, '..', 'client'),
     }),
-    
+
     CacheModule.register({
       isGlobal: true,
       store: redisStore,

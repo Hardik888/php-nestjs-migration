@@ -4,6 +4,7 @@ import { StripeService } from './stripe.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PaymentSchema } from './entities/payment.schema';
+import { ProductSchema } from './entities/product.schema';
 @Module({})
 export class StripeModule {
   static forRootAsync(): DynamicModule {
@@ -17,6 +18,10 @@ export class StripeModule {
             name: 'PAYMENT',
             schema: PaymentSchema,
           },
+          {
+            name: 'PRODUCT',
+            schema: ProductSchema,
+          },
         ]),
       ],
       providers: [
@@ -28,7 +33,6 @@ export class StripeModule {
           inject: [ConfigService],
         },
       ],
-      exports: [MongooseModule],
     };
   }
 }

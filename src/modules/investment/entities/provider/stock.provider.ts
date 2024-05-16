@@ -3,6 +3,9 @@ import { StockData } from '../stock.entity';
 import { Repository } from 'typeorm';
 import { Stock } from '../../types/stock.type';
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Product } from 'src/modules/stripe/entities/product.entity';
 
 @Injectable()
 export class StockSync {
@@ -11,11 +14,11 @@ export class StockSync {
     private stockRepository: Repository<StockData>,
   ) {}
 
-  async get(payload: Stock) {
-    const findstock = this.stockRepository.find({
-      where: { stockID: payload.stockID },
+  async get(stockData: Partial<Stock>): Promise<any> {
+    const findstock = await this.stockRepository.find({
+      where: { stockID: stockData.stockID },
     });
-    if (findstock) {
-    }
+
+    return findstock;
   }
 }
