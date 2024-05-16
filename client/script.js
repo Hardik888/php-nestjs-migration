@@ -1,9 +1,9 @@
-const button = document.querySelector("button")
-button.addEventListener("click", () => {
-  fetch("http://localhost:3000/create-checkout-session", {
-    method: "POST",
+const button = document.querySelector('button');
+button.addEventListener('click', () => {
+  fetch('http://localhost:3000/create-checkout-session', {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       items: [
@@ -12,14 +12,14 @@ button.addEventListener("click", () => {
       ],
     }),
   })
-    .then(res => {
-      if (res.ok) return res.json()
-      return res.json().then(json => Promise.reject(json))
+    .then((res) => {
+      if (res.ok) return res.json();
+      return res.json().then((json) => Promise.reject(json));
     })
     .then(({ url }) => {
-      window.location = url
+      window.location = url;
     })
-    .catch(e => {
-      console.error(e.error)
-    })
-})
+    .catch((e) => {
+      console.error(e.error);
+    });
+});

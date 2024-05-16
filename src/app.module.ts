@@ -10,14 +10,14 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'dist/client'), // Adjust for your environment
+    }),
     DatabaseModule,
     AdminModule,
     AuthModule,
-    InvestmentModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
-    }),
 
+    InvestmentModule,
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
