@@ -4,16 +4,16 @@ export class Product extends Document {
   testStock: {
     amount: number;
     currency: string;
-    desciption: string;
+    description: string;
   };
   testStock2: {
     amount: number;
     currency: string;
-    desciption: string;
+    description: string;
   };
   testStock3: {
     amount: number;
     currency: string;
-    desciption: string;
+    description: string;
   };
 }

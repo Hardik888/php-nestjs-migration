@@ -5,12 +5,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PaymentSchema } from './entities/payment.schema';
 import { ProductSchema } from './entities/product.schema';
+import { WebhookController } from './webhook.controller';
 @Module({})
 export class StripeModule {
   static forRootAsync(): DynamicModule {
     return {
       module: StripeModule,
-      controllers: [StripeController],
+      controllers: [StripeController, WebhookController],
       imports: [
         ConfigModule.forRoot(),
         MongooseModule.forFeature([

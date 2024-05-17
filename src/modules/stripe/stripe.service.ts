@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import Stripe from 'stripe';
@@ -16,37 +16,102 @@ export class StripeService {
   ) {
     this.stripe = new Stripe(this.configService.get('STRIPE_API_KEY'));
   }
+
   async createPaymentSession(data: StripeType) {
-    const { quantity } = data;
+    const { quantity, userID, productID } = data;
+    console.log(quantity);
     try {
-      const product = await this.productModel.findById(data.productID);
+      const product = await this.productModel
+        .findById(data.productID)
+        .lean()
+        .exec();
+      const name = product.testStock.description;
+      console.log({ name });
       if (!product) {
         throw new Error('Product not found');
       }
+      console.log(product);
+
       const session = await this.stripe.checkout.sessions.create({
+        mode: 'payment',
         payment_method_types: ['card'],
         line_items: [
           {
             price_data: {
-              currency: product.testStock.currency,
+              currency: 'inr',
               product_data: {
-                name: product.testStock.desciption,
-                description: product.testStock.desciption,
+                name: name,
+                description: 'test',
               },
               unit_amount: product.testStock.amount * 100,
             },
-            quantity,
+            quantity: quantity,
           },
         ],
-        mode: 'payment',
-        success_url: '',
-        cancel_url: '',
-        client_reference_id: data.userID,
-        metadata: {},
+        success_url: 'https://google.com',
+        cancel_url: 'https://facebook.com',
+        client_reference_id: data.userID.toString(),
+        metadata: {
+          userId: userID.toString(),
+          productId: productID.toString(),
+          quantity: quantity,
+        },
       });
-      return session.id;
+      console.log({ session });
+      return session.url;
     } catch (error) {
-      throw new Error('Error creating payment session:' + error.message);
+      console.log(error);
+      return null;
+    }
+  }
+
+  async handleWebhookEvent(payload: any, signature: string) {
+    try {
+      console.log({ payload, signature });
+
+      const event = this.stripe.webhooks.constructEvent(
+        payload,
+        signature,
+        this.configService.get('STRIPE_WEBHOOK_SECRET'),
+      );
+      console.log({ event });
+
+      switch (event.type) {
+        case 'payment_intent.succeeded':
+          await this.handlePaymentIntentSucceeded(event.data.object);
+          break;
+        case 'checkout.session.completed':
+          break;
+        default:
+          console.log('Unhandled event type:', event.type);
+      }
+
+      return { received: true };
+    } catch (error) {
+      console.error('Error handling webhook event:', error);
+      return { error: error.message };
+    }
+  }
+
+  private async handlePaymentIntentSucceeded(
+    paymentIntent: Stripe.PaymentIntent,
+  ) {
+    try {
+      const userID = paymentIntent.metadata.userID;
+      const productId = paymentIntent.metadata.productId;
+      const quantity = paymentIntent.metadata.quantity;
+      console.log({ paymentIntent });
+
+      const payment = new this.productModel({
+        userID,
+        productId,
+        quantity,
+      });
+
+      await payment.save();
+    } catch (error) {
+      console.error('Error handling successful payment:', error);
+      throw new Error('Error handling successful payment');
     }
   }
 }

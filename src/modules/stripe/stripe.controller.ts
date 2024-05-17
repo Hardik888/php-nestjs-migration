@@ -10,6 +10,8 @@ export class StripeController {
     const { userID, productID, quantity } = body;
     try {
       const response = await this.stripeService.createPaymentSession(body);
+      console.log(response);
+      return response;
     } catch {}
   }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AdminModule } from './modules/admin/admin.module';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -8,6 +8,8 @@ import { StripeModule } from './modules/stripe/stripe.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { RawBodyMiddleware } from './middleware/rawbody.middleware';
+import { JsonBodyMiddleware } from './middleware/jsonbody.middleware';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -28,4 +30,15 @@ import { join } from 'path';
     StripeModule.forRootAsync(),
   ],
 })
-export class AppModule {}
+export class AppModule {
+  public configure(consumer: MiddlewareConsumer): void {
+    consumer
+      .apply(RawBodyMiddleware)
+      .forRoutes({
+        path: '/webhook/create',
+        method: RequestMethod.POST,
+      })
+      .apply(JsonBodyMiddleware)
+      .forRoutes('*');
+  }
+}
