@@ -1,3 +1,23 @@
+# 
+
+**Project Title:** Creating a Scalable Backend for Capital Solutions with Admin and User Features
+
+**Description:** I built a solid backend using NestJs for a platform handling capital solutions. By integrating Stripe for payments, users could manage investments,ROI, authenticate securely, and track transactions easily.
+
+**Technologies Used:**
+
+- **NestJs:** I chose NestJs to work with principle of OOP along with Dependency Injection, writing modular and isolated codebase with TypeScript to ensure reliability.
+- **Stripe API:** With Stripe, I made payment processing smooth, ensuring users had a hassle-free experience.
+- **Redis:** Using Redis to keep user statuses updated quickly, reflecting payment statuses accurately.
+- **MySQL & MongoDB:** I stored stock data in MySQL and seamlessly moved product data to MongoDB, making it easier to integrate with Stripe.
+- **TypeORM:** Using TypeORM with NestJs, I optimized database interactions for better performance.
+
+**Key Highlights:**
+
+- **Helping Investment Firms:**  This backend is not  just a tool; it is designed to support investment firms, giving them advanced features and strong security.
+- **Keeping Code Clean:** I made sure every bit of code was simple and easy to understand, ensuring a secure platform for handling transactions and using typescript and type checking in every service.
+- **Boosting Financial Understanding:** Beyond just building a platform, I aimed to make capital solutions more accessible and understandable for everyone.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
